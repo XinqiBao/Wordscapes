@@ -174,7 +174,7 @@ public:
 int main(){
 
 	lset dic;
-	loadDictionary(&dic, "dict_.txt");
+	loadDictionary(&dic, "words_alpha.txt");
 
 	cout << "Dictionary loaded!" << endl;
 

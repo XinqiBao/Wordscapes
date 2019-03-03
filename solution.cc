@@ -8,6 +8,7 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <set>
 using namespace std;
 
 class lset{
@@ -101,7 +102,7 @@ private:
 	int numLetters;
 	vector<char> letters;
 	int findWords(){
-		cout << "Find words: blank as '*' || exit: 0 \n->";
+		cout << "Find words: blank as '*' || back new scape: 0 \n->";
 		string str;
 		cin >> str;
 		if(str[0] == '0')
@@ -127,13 +128,17 @@ private:
 			}
 		}
 		int sizeW = word.size();
-		finding(word, lstat, 0, sizeW, "");
+		set<string> ans;
+		finding(word, lstat, 0, sizeW, "", ans);
+		for(auto& w: ans)
+			cout << w << endl;
 		return 0;
 	}
-	void finding(vector<char> w, vector<bool> lst, int pos, int ws, string str){
+	void finding(vector<char> w, vector<bool> lst, int pos, int ws, string str, set<string>& ans){
 		if(pos == ws){
-			if(dic.find(&(str+'\0')[0]))
-				cout << str << endl;
+			if(dic.find(&(str)[0]))
+				//cout << str << endl;
+				ans.insert(str);
 			return;
 		}
 		if(pos != 0 && !dic.prefix(&(str+'\0')[0]))
@@ -144,18 +149,18 @@ private:
 					string st = str+letters[i];//cout <<'-'<<st<<endl;
 					vector<bool> lst_(lst);
 					lst_[i] = true;
-					finding(w, lst_, pos+1, ws, st);
+					finding(w, lst_, pos+1, ws, st, ans);
 				}
 			}
 		}
 		else{
 			str += w[pos];
-			finding(w, lst, pos+1, ws, str);
+			finding(w, lst, pos+1, ws, str, ans);
 		}
 	}
 public:
 	scape(lset& dic): dic(dic){
-		cout << "add letters || To exit: 0 \n->";
+		cout << "add letters || back new scape: 0 \n->";
 		string str;
 		cin >> str;
 		if(str[0] == '0')
